@@ -16,6 +16,7 @@
   margin: 0 auto; /* Center the content horizontally */
   padding: 20px; /* Add some padding for spacing */
   box-sizing: border-box; /* Ensure padding doesn't affect width */
+  border-left: 2px solid white;
 }
 
 /* Optional: Add a background color or style for the outer area */
@@ -50,12 +51,16 @@ a:visited {
 }
 
 .JamesNav {
+  position:sticky;
+  z-index: 10;
+  top: 0;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
   background-color: black;
+  border-bottom: 2px solid white;
   gap: 20px;
   margin-top: 20px;
 }
@@ -163,9 +168,30 @@ a:visited {
 
 
 .JamesIntro {
+  position: relative; /* Ensure this is relative for absolute children */
   display: flex;
   align-items: center;
   gap: 100px;
+  border-bottom: 5px solid white;
+  padding-bottom: 250px; /* Adjust if needed */
+}
+
+.MaoMao {
+  position: absolute;
+  right: calc((100% - 1400px) / 2); /* Align with .App container */
+  bottom: 0; /* Ensure it touches the border-bottom */
+  z-index: 1;
+  --width: 10vw;
+  width: var(--width);
+  transform: translateY(0);
+}
+
+/* Adjust for smaller screens */
+@media (max-width: 1400px) {
+  .MaoMao {
+    right: 0;
+    bottom: 0; /* Ensure it touches the border-bottom */
+  }
 }
 
 .James {
@@ -198,7 +224,46 @@ a:visited {
   font-size: 18px;
   line-height: 1.5;
 }
+/* Define the new keyframe animation */
+@keyframes aboutMeActive {
+  0% {
+    animation-timing-function: ease-in-out;
+    transform: translate3d(0, -200px, 0) scale(0.7); /* Start above and scale down */
+    opacity: 0;
+  }
+  14% {
+    animation-timing-function: ease-in-out;
+    transform: translate3d(0, 74px, 0) scale(1.111); /* Move down slightly */
+    opacity: 1;
+  }
+  28% {
+    animation-timing-function: ease-in-out;
+    transform: translate3d(0, -32px, 0) scale(0.952); /* Move up slightly */
+  }
+  46% {
+    animation-timing-function: ease-in-out;
+    transform: translate3d(0, 8px, 0) scale(1.012); /* Move down slightly */
+  }
+  58% {
+    animation-timing-function: ease-in-out;
+    transform: translate3d(0, -3.28px, 0) scale(0.99508); /* Move up slightly */
+  }
+  74% {
+    animation-timing-function: ease-in-out;
+    transform: translate3d(0, 1.16px, 0) scale(1.00174); /* Move down slightly */
+  }
+  89% {
+    animation-timing-function: ease-in-out;
+    transform: translate3d(0, -0.4px, 0) scale(0.9994); /* Move up slightly */
+  }
+  100% {
+    animation-timing-function: ease-in-out;
+    transform: translate3d(0, 0, 0) scale(1); /* Final position */
+    opacity: 1;
+  }
+}
 
+/* Default state (hidden) */
 .AboutContainer {
   display: flex;
   flex-direction: column;
@@ -207,6 +272,21 @@ a:visited {
   max-width: 50%;
   margin-left: auto;
   margin-right: auto;
+  opacity: 0; /* Hidden by default */
+  transform: translateY(-50px) scale(0.8); /* Start above and scale down */
+  transition: opacity 0.8s ease, transform 0.8s ease; /* Smooth fade-out and movement */
+}
+/* Apply the new animation when visible */
+.AboutContainer.animate {
+  animation: aboutMeActive 0.8s cubic-bezier(0.25, 1.5, 0.5, 1.2) forwards; /* Pop-in animation */
+  opacity: 1; /* Fully visible */
+  transform: translateY(0) scale(1); /* Final position */
+}
+
+/* Fade-out effect when the animate class is removed */
+.AboutContainer:not(.animate) {
+  opacity: 0; /* Fade out */
+  transform: translateY(20px) scale(0.9); /* Move up slightly and shrink */
 }
 
 .SkillsContainer {
@@ -217,4 +297,13 @@ a:visited {
   max-width: 50%;
   margin-left: auto;
   margin-right: auto;
+}
+
+.skill-animation {
+  transition: transform 0.1s linear, opacity 0.1s linear; /* Smooth animation */
+}
+
+.skill-animation.animate {
+  opacity: 1;
+  transform: translateX(100%);
 }
