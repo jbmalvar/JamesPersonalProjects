@@ -18,6 +18,22 @@ function App() {
   const skillsRef = useRef<HTMLHeadingElement | null>(null);
   const aboutRef = useRef<HTMLDivElement | null>(null); // Reference for AboutContainer
   const [isAboutVisible, setIsAboutVisible] = useState(false);
+  const [maoMaoOffset, setMaoMaoOffset] = useState(0); // State to track MaoMao's position
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      // Dynamically calculate MaoMao's height based on 10vw
+      const maoMaoHeight = window.innerWidth * 0.1; // 10vw in pixels
+      const whiteLineHeight = 90; // Height of the white line (border-bottom)
+      const maxOffset = maoMaoHeight + whiteLineHeight; // Ensure MaoMao fully disappears
+      const newOffset = Math.min(scrollY, maxOffset);
+      setMaoMaoOffset(newOffset); // Update MaoMao's position
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+  
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -43,28 +59,6 @@ function App() {
       }
     };
   }, []);
-  
-  useEffect(() => {
-    const handleScroll = () => {
-      if (skillsRef.current) {
-        const rect = skillsRef.current.getBoundingClientRect()
-        const windowHeight = window.innerHeight
-
-        // Start tracking when the element is at the bottom of the viewport
-        if (rect.top <= windowHeight && startScroll === null) {
-          setStartScroll(window.scrollY) // Store scroll position when entering view
-        }
-
-        // Update scroll position relative to the starting point
-        if (startScroll !== null) {
-          setScrollPosition(window.scrollY - startScroll)
-        }
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [startScroll]);
 
   return (
     <div className="App">
@@ -86,35 +80,33 @@ function App() {
             <h1>Hello, My name is </h1>
             <h1>James Malvar</h1>
             <h2>Software Engineer, Fullstack Engineer</h2>
-            <img src = {James}></img>
+            <img src = {James} className = "JamesImg"></img>
           </span>
           <span className = "JamesDesc">
             <p>Hey, I'm James, I'm a first generation Filipino Student</p>
             <p>Thanks for taking a look at my website</p>
             <p>Come take a look at my personal projects</p>
             <p>Current Project: Personal Portfolio</p>
-            <img src = {MaoMao} className = "MaoMao"></img>
+            <img 
+              src={MaoMao} 
+              className="MaoMao" 
+              style={{ transform: `translateY(${maoMaoOffset}px)` }} // Dynamically adjust position
+            />
           </span>
         </div>
         <div id="about-section" className={`AboutContainer ${isAboutVisible ? 'animate' : ''}`} ref={aboutRef}>
-            <h1>About Me</h1>
-            <p>I’m James as you can tell from above. I’m currently attending the University of Washington and I’m a Computer Science Major. I’m a third year there. I’m currently looking for an internship or some sort of experience.</p>
-            <p>I have a few hobbies. I watch anime and play a lot of video games. One of my favorite anime currently is Kusuriya No Hitorigoto. I love play video games as well and will play multiplayer games with friends regardless of the content. My favorite genre of single player games are turn based games. I’ve played the Persona series, Baldur’s Gate 3, and Fear and Hunger. Games I’ve enjoyed thoroughly.</p>
-            <p>Enough about though, come learn about my skills and what I’ve worked on. If you’d like to contact me, check above.</p>
+          <h1 className='AboutTitle'>About Me</h1>
         </div>
-        <div id = "skills-section" className = "SkillsContainer">
-          <h1>Skills</h1>
-          <p>Here are some of the skills I have</p>
-          <div className = "Skills">
-            <div>
-              <h2 ref={skillsRef} className="skill-animation" style={{ transform: `translateX(${Math.min(scrollPosition, window.innerWidth) - 700}px)` }}> HTML/CSS/React</h2>
-            </div>
-          </div>
-        </div>
-        <div id = "projects-section" className = "ProjectsContainer">
+                <div id="about-section" className={`AboutContainer ${isAboutVisible ? 'animate' : ''}`} ref={aboutRef}>
+          <h1 className='AboutTitle'>About Me</h1>
         </div>
     </div>
   )
 }
 
 export default App
+
+/*<h1>About Me</h1>
+            <p>I’m James as you can tell from above. I’m currently attending the University of Washington and I’m a Computer Science Major. I’m a third year there. I’m currently looking for an internship or some sort of experience.</p>
+            <p>I have a few hobbies. I watch anime and play a lot of video games. One of my favorite anime currently is Kusuriya No Hitorigoto. I love play video games as well and will play multiplayer games with friends regardless of the content. My favorite genre of single player games are turn based games. I’ve played the Persona series, Baldur’s Gate 3, and Fear and Hunger. Games I’ve enjoyed thoroughly.</p>
+            <p>Enough about though, come learn about my skills and what I’ve worked on. If you’d like to contact me, check above.</p> */
