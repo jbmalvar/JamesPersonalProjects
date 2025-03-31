@@ -51,14 +51,14 @@ function App() {
             <img src = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/600px-Octicons-mark-github.svg.png?20180806170715" className = "contacts"/>
           </a>
         </nav>
-        <div className = "JamesIntro">
-          <span className = 'James'>
+        <div className="JamesIntro">
+          <span className="James">
             <h1>Hello, My name is </h1>
             <h1>James Malvar</h1>
             <h2>Software Engineer, Fullstack Engineer</h2>
-            <img src = {James} className = "JamesImg"></img>
+            <img src={James} className="JamesImg" alt="James" />
           </span>
-          <span className = "JamesDesc">
+          <span className="JamesDesc">
             <p>Hey, I'm James, I'm a first generation Filipino Student</p>
             <p>Thanks for taking a look at my website</p>
             <p>Come take a look at my personal projects</p>
@@ -66,48 +66,10 @@ function App() {
             <img 
               src={MaoMao} 
               className="MaoMao" 
-              style={{ transform: `translateY(${maoMaoOffset}px)` }} // Dynamically adjust position
+              style={{ transform: `translateY(${maoMaoOffset}px)` }} 
+              alt="MaoMao Animation"
             />
           </span>
-        </div>
-        <div className="AboutSection">
-          <AboutContainer
-            id="about-section"
-            title="About Me"
-            backgroundImage={Left}
-            imgStyle={{
-              position: 'absolute', // Ensure the image is positioned relative to its container
-              left: '0px', // Move the image 10px from the left edge of the container
-              width: '80%', // Optional: Adjust the width of the image
-              height: '90%', // Optional: Maintain aspect ratio
-              objectFit: 'contain', // Ensure the image fits within its bounds
-            }}
-          />
-          <AboutContainer
-            id="firstAboutSection"
-            title="Currently"
-            backgroundImage={Right}
-            styles={{marginTop: '-100px'}}
-            imgStyle={{
-              position: 'absolute', // Position the image absolutely within its container
-              left: '20%', // Move the image 10% from the right edge of the container
-              width: '80%', // Adjust the width of the image
-              height: '100%', // Maintain aspect ratio
-            }}
-            titleStyle={{left: '30%', top: '-10%', position: 'absolute', color: 'white'}}
-          />
-          <div className = "CenterLeftRight">
-            <AboutContainer
-              id="centerLeft"
-              title="Likes"
-              backgroundImage={Center}
-            />
-            <AboutContainer
-              id="centerLeftRight"
-              title="Hobbies"
-              backgroundImage={Center}
-            />
-          </div>
         </div>
     </div>
   )
