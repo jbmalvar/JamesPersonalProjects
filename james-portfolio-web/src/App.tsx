@@ -1,23 +1,25 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState} from 'react'
 import yellowGibus from './assets/yellowGibus.webp'
 import James from './assets/James.jpg'
 import MaoMao from './assets/MaoMao.gif'
+import Left from './assets/Left.png'
+import Right from './assets/Right.png'
+import AboutContainer from './components/AboutContainer';
+import Center from './assets/Middle.png'
 import './App.css'
 
 function App() {
   const scrollTo = (sectionId: string) => {
-    const section = document.getElementById(sectionId)
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
+    const section = document.getElementById(sectionId);
+    if (sectionId === "about-section") {
+      const yOffset = -200; // Adjust this value as needed
+      if (section) {
+        const yPosition = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: yPosition, behavior: 'smooth' });
+      }
     }
-  }
+  };
 
-  const [scrollPosition, setScrollPosition] = useState(0);
-  const [startScroll, setStartScroll] = useState<number | null>(null);
-  const [isVisible, setIsVisible] = useState(false);
-  const skillsRef = useRef<HTMLHeadingElement | null>(null);
-  const aboutRef = useRef<HTMLDivElement | null>(null); // Reference for AboutContainer
-  const [isAboutVisible, setIsAboutVisible] = useState(false);
   const [maoMaoOffset, setMaoMaoOffset] = useState(0); // State to track MaoMao's position
 
   useEffect(() => {
@@ -34,39 +36,13 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
   
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsAboutVisible(true); // Add the 'animate' class when visible
-          } else {
-            setIsAboutVisible(false); // Remove the 'animate' class when not visible
-          }
-        });
-      },
-      { threshold: 0.5 } // Trigger when 50% of the element is visible
-    );
-  
-    if (aboutRef.current) {
-      observer.observe(aboutRef.current);
-    }
-  
-    return () => {
-      if (aboutRef.current) {
-        observer.unobserve(aboutRef.current);
-      }
-    };
-  }, []);
-
   return (
     <div className="App">
         <nav className = "JamesNav">
           <img src = {yellowGibus} className = "jamesLogo"></img>
           <h2 className = "barCat" onClick={() => scrollTo("about-section")}>About</h2>
-          <h2 className = "barCat">Projects</h2>
           <h2 className = "barCat" onClick={() => scrollTo("skills-section")}>Skills</h2>
+          <h2 className = "barCat">Projects</h2>
           <h2 className = "right">Contact Me</h2>
           <a href="https://www.linkedin.com/in/james-joshua-malvar/" target="_blank" rel="noopener noreferrer">
             <img src="https://www.shareicon.net/data/2016/07/13/606885_linkedin_2048x2048.png" className="contacts" />
@@ -94,17 +70,50 @@ function App() {
             />
           </span>
         </div>
-        <div id="about-section" className={`AboutContainer ${isAboutVisible ? 'animate' : ''}`} ref={aboutRef}>
-          <h1 className='AboutTitle'>About Me</h1>
-        </div>
-                <div id="about-section" className={`AboutContainer ${isAboutVisible ? 'animate' : ''}`} ref={aboutRef}>
-          <h1 className='AboutTitle'>About Me</h1>
+        <div className="AboutSection">
+          <AboutContainer
+            id="about-section"
+            title="About Me"
+            backgroundImage={Left}
+            imgStyle={{
+              position: 'absolute', // Ensure the image is positioned relative to its container
+              left: '0px', // Move the image 10px from the left edge of the container
+              width: '80%', // Optional: Adjust the width of the image
+              height: '90%', // Optional: Maintain aspect ratio
+              objectFit: 'contain', // Ensure the image fits within its bounds
+            }}
+          />
+          <AboutContainer
+            id="firstAboutSection"
+            title="Currently"
+            backgroundImage={Right}
+            styles={{marginTop: '-100px'}}
+            imgStyle={{
+              position: 'absolute', // Position the image absolutely within its container
+              left: '20%', // Move the image 10% from the right edge of the container
+              width: '80%', // Adjust the width of the image
+              height: '100%', // Maintain aspect ratio
+            }}
+            titleStyle={{left: '30%', top: '-10%', position: 'absolute', color: 'white'}}
+          />
+          <div className = "CenterLeftRight">
+            <AboutContainer
+              id="centerLeft"
+              title="Likes"
+              backgroundImage={Center}
+            />
+            <AboutContainer
+              id="centerLeftRight"
+              title="Hobbies"
+              backgroundImage={Center}
+            />
+          </div>
         </div>
     </div>
   )
 }
 
-export default App
+export default App;
 
 /*<h1>About Me</h1>
             <p>I’m James as you can tell from above. I’m currently attending the University of Washington and I’m a Computer Science Major. I’m a third year there. I’m currently looking for an internship or some sort of experience.</p>
