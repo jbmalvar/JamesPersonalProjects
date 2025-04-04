@@ -216,6 +216,8 @@ a:visited {
   border-style: solid;
   border-width: 8px;
   margin-top: 1vw;
+  max-width: 100%; /* Ensure the image scales down responsively */
+  height: auto; /* Maintain aspect ratio */
 }
 
 .JamesDesc {
@@ -270,5 +272,10 @@ a:visited {
 
   .CenterLeftRight {
     flex-direction: column; /* Stack sections vertically */
+  }
+
+  .James img {
+    width: 80%; /* Scale down the image for smaller screens */
+    max-width: 80%; /* Ensure it doesn't exceed 80% of the container */
   }
 }

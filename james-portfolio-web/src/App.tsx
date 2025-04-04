@@ -2,10 +2,10 @@ import { useEffect, useState} from 'react'
 import yellowGibus from './assets/yellowGibus.webp'
 import James from './assets/James.jpg'
 import MaoMao from './assets/MaoMao.gif'
-import Left from './assets/Left.png'
-import Right from './assets/Right.png'
-import AboutContainer from './components/AboutContainer';
-import Center from './assets/Middle.png'
+// import Left from './assets/Left.png'
+// import Right from './assets/Right.png'
+// import AboutContainer from './components/AboutContainer';
+// import Center from './assets/Middle.png'
 import './App.css'
 
 function App() {
